@@ -1,0 +1,7 @@
+anthropic>=2.8.0
+pydantic>=2
+httpx
+flask>=3
+yt-dlp
+faster-whisper
+numpy

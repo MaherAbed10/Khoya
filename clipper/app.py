@@ -14,7 +14,7 @@ from pathlib import Path
 
 from flask import Flask, abort, redirect, request, send_from_directory, url_for
 
-from clipper import higgsfield
+from clipper import higgsfield, setup_check
 from clipper.pipeline import OUTPUT_ROOT, run_job
 
 app = Flask(__name__)
@@ -62,10 +62,13 @@ def index():
         f'<small>{d["status"]}</small></li>'
         for j, d in sorted(JOBS.items(), key=lambda kv: -kv[1]["created"])
     )
+    issues = setup_check.problems()
+    warn = ("<pre class='err'>Fix before running:\n" + html.escape("\n".join(issues)) + "</pre>") if issues else ""
     return page(f"""
 <h1>Whop Clipper</h1>
 <p class="sub">Paste a campaign and the stream. Claude reads the rules, finds the best moments and cuts
 vertical clips with captions, ready to post.</p>
+{warn}
 <form method="post" action="/run">
   <label>Whop campaign link</label>
   <input name="whop" placeholder="https://whop.com/...">

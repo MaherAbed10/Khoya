@@ -18,24 +18,17 @@ What happens on each job:
 
 ## Setup (once)
 
-You need Python 3.10+ and ffmpeg (`brew install ffmpeg` on Mac, `winget install ffmpeg` on Windows).
+1. Install Python 3.10+ and ffmpeg (`brew install ffmpeg` on Mac, `winget install ffmpeg` on Windows).
+2. Double-click **`start.bat`** (Windows) or run **`./start.sh`** (Mac/Linux). The first run installs
+   everything and creates a `.env` file.
+3. Open `clipper/.env` and paste your Claude key after `ANTHROPIC_API_KEY=` (from console.anthropic.com).
+   Higgsfield keys are optional. Restart the start script.
 
-```bash
-cd clipper
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...        # from console.anthropic.com
-# optional, for AI intros (console.higgsfield.ai):
-export HF_API_KEY_ID=...
-export HF_API_KEY_SECRET=...
-```
+If anything is missing, the page shows it in red at the top.
 
 ## Use it
 
-```bash
-python app.py
-```
-
-Open http://localhost:5000. Then paste:
+Start it with the start script. The browser opens http://localhost:5000. Then paste:
 
 - the Whop campaign link
 - the campaign rules, copied from Whop (the page often needs a login, so pasting them is the reliable way)

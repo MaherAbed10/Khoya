@@ -7,7 +7,9 @@ import time
 from pathlib import Path
 from typing import Callable
 
-from . import ai, higgsfield, media
+from . import ai, higgsfield, media, setup_check
+
+setup_check.load_env()
 
 OUTPUT_ROOT = Path(__file__).resolve().parent.parent / "outputs"
 
@@ -23,6 +25,9 @@ def run_job(
     job_dir: Path | None = None,
     log: Callable[[str], None] = print,
 ) -> list[dict]:
+    missing = setup_check.problems()
+    if missing:
+        raise RuntimeError("Setup not finished:\n- " + "\n- ".join(missing))
     job_dir = job_dir or OUTPUT_ROOT / time.strftime("%Y%m%d-%H%M%S")
     job_dir.mkdir(parents=True, exist_ok=True)
 
